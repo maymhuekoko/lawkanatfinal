@@ -137,7 +137,7 @@ class SaleController extends Controller
         $codes =Code::all();
 
 		$cuisine_types = CuisineType::all();
-		$ygn_towns = Town::where('state_id',13)->get();
+		$ygn_towns = Town::where('state_id',17)->get();
 		return view('Sale.order_sale_page', compact('ygn_towns','codes','items','meal_types','cuisine_types','table_number','table'));
 	}
 	protected function searchDelicharges(Request $request){
