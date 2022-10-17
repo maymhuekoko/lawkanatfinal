@@ -480,7 +480,7 @@ class AdminController extends Controller
             // $orders = ShopOrder::where("is_mobile",1)->with('option')->with('table')->orderBy('id','desc')->first();
             // dd($orders->id);
             $option_n = DB::table('option_shop_order')
-            ->where('status',7)
+            ->where('print',0)
             ->get();
             // dd(count($option_n));
 
@@ -511,13 +511,19 @@ class AdminController extends Controller
 		array_push($name,$oname);
 		}
         // dd($name);
-        $print = DB::table('option_shop_order')
-            ->where('status',7)
-            ->update(['status' => 0]);
-
+        if(count($option_n) == 0 ){
             $print1 = DB::table('option_shop_order')
             ->where('status',5)
             ->update(['status' => 0]);
+        }
+        else{
+            $print = DB::table('option_shop_order')
+            ->where('print',0)
+            ->update(['status' => 1]);
+        }
+
+
+
             // if($orders){
                 return response()->json([
                     'name' => $name,
