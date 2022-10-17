@@ -489,8 +489,8 @@ class AdminController extends Controller
                 ->where('status',5)
                 ->get();
                 $print1 = DB::table('option_shop_order')
-            ->where('status',5)
-            ->update(['status' => 0]);
+                  ->where('status',5)
+                  ->update(['status' => 0]);
             }
             else{
                 $option_name = $option_n;

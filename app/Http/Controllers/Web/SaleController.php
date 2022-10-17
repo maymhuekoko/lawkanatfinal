@@ -482,7 +482,7 @@ foreach($code_lists as $code){
 
 				if (empty($test)) {
 
-					$shop_order->option()->attach($option->id, ['quantity' => $option->order_qty,'tocook'=>1,'note' => "Note Default", 'status' => 5]);
+					$shop_order->option()->attach($option->id, ['quantity' => $option->order_qty,'tocook'=>1,'note' => "Note Default", 'status' => 0]);
 
 				} else {
 
