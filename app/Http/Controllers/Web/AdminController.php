@@ -488,9 +488,15 @@ class AdminController extends Controller
                 $option_name = DB::table('option_shop_order')
                 ->where('status',5)
                 ->get();
+                $print1 = DB::table('option_shop_order')
+            ->where('status',5)
+            ->update(['status' => 0]);
             }
             else{
                 $option_name = $option_n;
+                $print = DB::table('option_shop_order')
+            ->where('print',0)
+            ->update(['print' => 1]);
             }
 
             // dd(count($option_name));
@@ -511,16 +517,16 @@ class AdminController extends Controller
 		array_push($name,$oname);
 		}
         // dd($name);
-        if(count($option_n) == 0 ){
-            $print1 = DB::table('option_shop_order')
-            ->where('status',5)
-            ->update(['status' => 0]);
-        }
-        else{
-            $print = DB::table('option_shop_order')
-            ->where('print',0)
-            ->update(['status' => 1]);
-        }
+        // if(count($option_n) == 0 ){
+        //     $print1 = DB::table('option_shop_order')
+        //     ->where('status',5)
+        //     ->update(['status' => 0]);
+        // }
+        // else{
+            // $print = DB::table('option_shop_order')
+            // ->where('print',0)
+            // ->update(['print' => 1]);
+        // }
 
 
 
