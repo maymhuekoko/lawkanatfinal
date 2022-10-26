@@ -561,6 +561,7 @@
     }
     $(document).ready(function(){
         // bar chart famous menu
+        // alert('hello');
         $.ajax({
            type:'POST',
            url:'/getWeekNowFamous',
@@ -570,7 +571,7 @@
             },
 
            success:function(data){
-            alert(data.famous_item);
+            alert('hello');
             var html = ''; var html1 = '';
             $.each(data.famous_item,function(i,v){
                 html += `

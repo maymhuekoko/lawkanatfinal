@@ -165,8 +165,7 @@ Route::group(['middleware' => ['UserAuth']], function () {
     // Manager Dashboard
     Route::post('getOrderFullfill', 'Web\AdminController@getTotalOrderFulfill');
     Route::post('getmonthpie', 'Web\AdminController@getmonthpie');
-    Route::post('getWeekNowFamous', 'Web\AdminController@getWeekN
-    owFamous_Menu');
+    Route::post('getWeekNowFamous', 'Web\AdminController@getWeekNowFamous_Menu');
     Route::post('getFamousWeek', 'Web\AdminController@getFamousWeek_data');
     Route::get('report','Web\AdminController@managerDashboard')->name('report');
 
