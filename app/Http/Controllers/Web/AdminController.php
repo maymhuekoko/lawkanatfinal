@@ -1009,6 +1009,7 @@ function getWeekNowFamous_Menu()
     $weekStartDate = $now->startOfWeek()->format('Y-m-d');
     $weekEndDate = $now->endOfWeek()->format('Y-m-d');
 
+    
     $duplicates = DB::table('option_voucher')
     ->select('option_id', DB::raw('COUNT(*) as `count`'))
     ->groupBy('option_id')

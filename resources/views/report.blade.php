@@ -176,9 +176,9 @@
 		</div> --}}
         <div class="col-md-6">
             <div class="card card-stats mb-4" >
-                <div class="card-body font-weight-bold">
+                <div class="card-body font-weight-bold text-center">
                     <h5>Top Five Famous Menu Item</h5>
-                    <div class="row" id="famous_item">
+                    <div class="row ml-5" id="famous_item">
 
                     </div>
                 </div>
@@ -575,7 +575,7 @@
             var html = ''; var html1 = '';
             $.each(data.famous_item,function(i,v){
                 html += `
-                <div class="col-md-8 mt-4" >
+                <div class="col-md-8 mt-4 ml-5" >
                     ${v}
                 </div>
                 `;
