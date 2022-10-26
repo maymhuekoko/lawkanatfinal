@@ -1023,13 +1023,23 @@ function getWeekNowFamous_Menu()
     }
 
     $options = DB::table('option_voucher')->get();
-    foreach($options as $opt){
-        $un_menu = Option::where('id','<>',$opt->option_id)->get();
+    $opt = Option::all();
+    $un_menu = DB::table('options')
+    ->whereNotIn('id', DB::table('option_voucher')->pluck('option_id'))
+    ->take(20)
+    ->get();
+    foreach($un_menu as $un){
+        $mnu = MenuItem::find($un->menu_item_id);
+        array_push($arr_un,$mnu->item_name);
     }
+    // array_push($arr_un,$un_menu->menu_item->item_name);
+     $arrr = array_unique($arr_un);
+     $arrrr = array_slice($arrr, 0, 5);
+    //  dd($arrrr);
 
     return response()->json([
         'famous_item' => $arr,
-        'unfamous_item' => $arr_un
+        'unfamous_item' => $arrrr
     ]);
 }
 

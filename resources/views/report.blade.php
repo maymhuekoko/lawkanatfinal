@@ -571,7 +571,7 @@
             },
 
            success:function(data){
-            alert('hello');
+
             var html = ''; var html1 = '';
             $.each(data.famous_item,function(i,v){
                 html += `
@@ -582,13 +582,13 @@
             })
             $('#famous_item').html(html);
             $.each(data.unfamous_item,function(i,b){
-                html += `
+                html1 += `
                 <div class="col-md-8 mt-4" >
                     ${b}
                 </div>
                 `;
             })
-            $('#famous_item').html(html);
+            $('#unfamous_item').html(html1);
            }
            });
 
