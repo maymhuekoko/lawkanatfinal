@@ -124,7 +124,7 @@
 	</div> --}}
 
     <div class="row md-12">
-		<div class="col-md-4">
+		{{-- <div class="col-md-4">
             <div class="card card-stats mb-4" >
                 <div class="card-body font-weight-bold">
                     <h5>Today Status</h5>
@@ -173,8 +173,8 @@
 
                 </div>
             </div>
-		</div>
-        <div class="col-md-4">
+		</div> --}}
+        <div class="col-md-6">
             <div class="card card-stats mb-4" >
                 <div class="card-body font-weight-bold">
                     <h5>Top Five Famous Menu Item</h5>
@@ -185,11 +185,11 @@
             </div>
 		</div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card card-stats mb-4" >
-                <div class="card-body font-weight-bold">
+                <div class="card-body font-weight-bold text-center">
                     <h5>Five Unfamous Menu Item</h5>
-                    <div class="row" id="unfamous_item">
+                    <div class="row ml-5" id="unfamous_item">
 
                     </div>
                 </div>
@@ -451,10 +451,10 @@
             $('#pieChart').remove(); // this is my <canvas> element
            $('#main').append('<canvas id="pieChart"><canvas>');
             var total_sales = data.total_sale;
-        var total_purchase = data.total_purchase;
-        var other_expense = data.total_expense;
+          var total_purchase = data.total_purchase;
+           var other_expense = data.total_expense;
 
-                var net_profit = total_sales  - (other_expense+total_purchase);
+                var net_profit = total_sales  - (other_expense);
 
 
 
@@ -583,7 +583,7 @@
             $('#famous_item').html(html);
             $.each(data.unfamous_item,function(i,b){
                 html1 += `
-                <div class="col-md-8 mt-4" >
+                <div class="col-md-8 mt-4 ml-5" >
                     ${b}
                 </div>
                 `;
@@ -826,9 +826,7 @@
 
                 // var total_profit_percent = (total_profit / total_sales) *100;
 
-                var net_profit = total_sales  - (other_expense+total_purchase);
-
-
+                var net_profit = total_sales  - (other_expense);
 
                 var income_total = total_sales ;
 

@@ -835,70 +835,70 @@ public function saleRecord()
 
 protected function getTotalOrderFulfill(Request $request)
 {
-       $jan_income = Voucher::whereMonth('date', '01')->get();
+       $jan_income = Voucher::whereMonth('date', '01')->where('status',0)->get();
        $jan  = 0;
        foreach($jan_income as $j){
              $jan += $j->total_price;
        }
 
-        $feb_income = Voucher::whereMonth('date', '02')->get();
+        $feb_income = Voucher::whereMonth('date', '02')->where('status',0)->get();
         $feb  = 0;
        foreach($feb_income as $f){
              $feb += $f->total_price;
        }
 
-        $mar_income = Voucher::whereMonth('date', '03')->get();
+        $mar_income = Voucher::whereMonth('date', '03')->where('status',0)->get();
         $mar  = 0;
        foreach($mar_income as $m){
              $mar += $m->total_price;
        }
 
-        $apr_income = Voucher::whereMonth('date', '04')->get();
+        $apr_income = Voucher::whereMonth('date', '04')->where('status',0)->get();
         $apr  = 0;
         foreach($apr_income as $a){
               $apr += $a->total_price;
         }
 
-        $may_income = Voucher::whereMonth('date', '05')->get();
+        $may_income = Voucher::whereMonth('date', '05')->where('status',0)->get();
         $may  = 0;
        foreach($may_income as $ma){
              $may += $ma->total_price;
        }
 
-        $jun_income = Voucher::whereMonth('date', '06')->get();
+        $jun_income = Voucher::whereMonth('date', '06')->where('status',0)->get();
         $jun  = 0;
        foreach($jun_income as $ju){
              $jun += $ju->total_price;
        }
 
-    $jul_income = Voucher::whereMonth('date', '07')->get();
+    $jul_income = Voucher::whereMonth('date', '07')->where('status',0)->get();
     $jul  = 0;
     foreach($jul_income as $july){
           $jul += $j->total_price;
     }
 
-        $aug_income = Voucher::whereMonth('date', '08')->get();
+        $aug_income = Voucher::whereMonth('date', '08')->where('status',0)->get();
         $aug  = 0;
         foreach($aug_income as $au){
               $aug += $au->total_price;
         }
-        $sep_income = Voucher::whereMonth('date', '09')->get();
+        $sep_income = Voucher::whereMonth('date', '09')->where('status',0)->get();
         $sep  = 0;
         foreach($sep_income as $se){
               $sep += $se->total_price;
         }
-        $oct_income = Voucher::whereMonth('date', '10')->get();
+        $oct_income = Voucher::whereMonth('date', '10')->where('status',0)->get();
         $oct  = 0;
        foreach($oct_income as $o){
              $oct += $o->total_price;
        }
-        $nov_income = Voucher::whereMonth('date', '11')->get();
+        $nov_income = Voucher::whereMonth('date', '11')->where('status',0)->get();
         $nov  = 0;
         foreach($nov_income as $n){
               $nov += $n->total_price;
         }
 
-        $dec_income = Voucher::whereMonth('date', '12')->get();
+        $dec_income = Voucher::whereMonth('date', '12')->where('status',0)->get();
         $dec  = 0;
        foreach($dec_income as $de){
              $dec += $de->total_price;
@@ -926,62 +926,62 @@ protected function getmonthpie(Request $request)
     // dd($request->pie_month);
     $total_sale=0; $total_purchase=0; $total_expense=0;
     if($request->pie_month == '01'){
-       $voucher = Voucher::whereMonth('date', '01')->get();
+       $voucher = Voucher::whereMonth('date', '01')->where('status',0)->get();
        $purchase = Purchase::whereMonth('purchase_date','01')->get();
        $expense = Expense::whereMonth('date','01')->get();
     }
     else if($request->pie_month == '02'){
-        $voucher = Voucher::whereMonth('date', '02')->get();
+        $voucher = Voucher::whereMonth('date', '02')->where('status',0)->get();;
         $purchase = Purchase::whereMonth('purchase_date','02')->get();
         $expense = Expense::whereMonth('date','02')->get();
      }
      else if($request->pie_month == '03'){
-        $voucher = Voucher::whereMonth('date', '03')->get();
+        $voucher = Voucher::whereMonth('date', '03')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','03')->get();
         $expense = Expense::whereMonth('date','03')->get();
      }
      else if($request->pie_month == '04'){
-        $voucher = Voucher::whereMonth('date', '04')->get();
+        $voucher = Voucher::whereMonth('date', '04')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','04')->get();
         $expense = Expense::whereMonth('date','04')->get();
      }
      else if($request->pie_month == '05'){
-        $voucher = Voucher::whereMonth('date', '05')->get();
+        $voucher = Voucher::whereMonth('date', '05')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','05')->get();
         $expense = Expense::whereMonth('date','05')->get();
      }
      else if($request->pie_month == '06'){
-        $voucher = Voucher::whereMonth('date', '06')->get();
+        $voucher = Voucher::whereMonth('date', '06')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','06')->get();
         $expense = Expense::whereMonth('date','06')->get();
      }
      else if($request->pie_month == '07'){
-        $voucher = Voucher::whereMonth('date', '07')->get();
+        $voucher = Voucher::whereMonth('date', '07')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','07')->get();
         $expense = Expense::whereMonth('date','07')->get();
      }
      else if($request->pie_month == '08'){
-        $voucher = Voucher::whereMonth('date', '08')->get();
+        $voucher = Voucher::whereMonth('date', '08')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','08')->get();
         $expense = Expense::whereMonth('date','08')->get();
      }
      else if($request->pie_month == '09'){
-        $voucher = Voucher::whereMonth('date', '09')->get();
+        $voucher = Voucher::whereMonth('date', '09')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','09')->get();
         $expense = Expense::whereMonth('date','09')->get();
      }
      else if($request->pie_month == '10'){
-        $voucher = Voucher::whereMonth('date', '10')->get();
+        $voucher = Voucher::whereMonth('date', '10')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','10')->get();
         $expense = Expense::whereMonth('date','10')->get();
      }
      else if($request->pie_month == '11'){
-        $voucher = Voucher::whereMonth('date', '11')->get();
+        $voucher = Voucher::whereMonth('date', '11')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','11')->get();
         $expense = Expense::whereMonth('date','11')->get();
      }
      else if($request->pie_month == '12'){
-        $voucher = Voucher::whereMonth('date', '12')->get();
+        $voucher = Voucher::whereMonth('date', '12')->where('status',0)->get();
         $purchase = Purchase::whereMonth('purchase_date','12')->get();
         $expense = Expense::whereMonth('date','12')->get();
      }
@@ -1012,7 +1012,7 @@ function getWeekNowFamous_Menu()
     $duplicates = DB::table('option_voucher')
     ->select('option_id', DB::raw('COUNT(*) as `count`'))
     ->groupBy('option_id')
-    ->havingRaw('COUNT(*) > 1')
+    ->havingRaw('COUNT(*) > 2')
     ->take(5)
     ->get();
 
