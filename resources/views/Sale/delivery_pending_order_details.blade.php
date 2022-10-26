@@ -88,7 +88,7 @@
 		                                	<td>{{$option->pivot->quantity}}</td>
 		                                	<td>{{$option->sale_price}}</td>
 											<td><?=$option->pivot->quantity * $option->sale_price?></td>
-		                                	@if($option->pivot->status == 0)
+		                                	{{-- @if($option->pivot->status == 0)
 		                                	<td>
 		                                		<span class="badge-pill badge-warning">Pending</span>
 											</td>
@@ -100,7 +100,8 @@
 		                                	<td>
 		                                		<span class="badge-pill badge-success">Finished</span>
 		                                	</td>
-		                                	@endif
+		                                	@endif --}}
+                                            <td><a href="{{route('canceldelidetail', ['order_id' => $pending_order_details->id, 'option_id' => $option->id])}}"><span class="badge-pill badge-danger">-</span></a></td>
 		                                </tr>
 		                            @endforeach
 		                        </tbody>

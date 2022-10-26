@@ -11,6 +11,8 @@ class Option extends Model
 
     protected $guarded = [];
 
+    protected $with = ['menu_item'];
+
     protected $fillable = [
 		'name',
 		'sale_price',

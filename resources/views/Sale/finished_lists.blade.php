@@ -101,8 +101,20 @@
                                 <td>
                                     @if ($vouc->type == 2)
                                     <a href="{{route('delivery_order_voucher',$vouc->order->id)}}" class="btn btn-info">Check Voucher</a>
+                                        @if ($vouc->status == 0)
+                                        <a class="btn btn-danger text-white" onclick="cancelvoucher({{$vouc->id}})" id="hide_{{$vouc->id}}">Cancel</a>
+                                        <span id="cancel_{{$vouc->id}}" hidden>(CANCEL)</span>
+                                        @else
+                                        <span>(CANCEL)</span>
+                                        @endif
                                     @else
                                     <a href="{{route('shop_order_voucher',$vouc->shopOrder->id)}}" class="btn btn-info">Check Voucher</a>
+                                        @if ($vouc->status == 0)
+                                        <a class="btn btn-danger text-white" onclick="cancelvoucher({{$vouc->id}})" id="hide_{{$vouc->id}}">Cancel</a>
+                                        <span id="cancel_{{$vouc->id}}" hidden>(CANCEL)</span>
+                                        @else
+                                        <span>(CANCEL)</span>
+                                        @endif
                                     @endif
                                 </td>
 
@@ -181,6 +193,25 @@
             $('#sale_table').html(html);
         }
         })
+    }
+
+    function cancelvoucher(id){
+        // alert(id);
+        $('#cancel_'+id).removeAttr('hidden');
+        $('#hide_'+id).hide();
+
+        $.ajax({
+        type:'POST',
+        url:'/Voucher-Cancel',
+        data:{
+        "_token":"{{csrf_token()}}",
+        "voucher_id":id,
+        },
+        success:function(data){
+            console.log(data);
+        }
+    })
+
     }
  </script>
 @endsection

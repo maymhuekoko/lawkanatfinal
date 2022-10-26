@@ -78,7 +78,7 @@ class LoginController extends Controller
 
             alert()->success("Successfully Login");
 
-            $voucher = Voucher::all();
+            $voucher = Voucher::where('status',0)->get();
             $purchase = Purchase::all();
             $expense = Expense::all();
             $total_sale = 0;$today_sale = 0;$total_inventory = 0;$total_expense=0;$total_profit= 0;
@@ -86,7 +86,7 @@ class LoginController extends Controller
             foreach($voucher as $vou){
                 $total_sale += $vou->total_price;
             }
-            $tod_voucher = Voucher::where('date',$today)->get();
+            $tod_voucher = Voucher::where('date',$today)->where('status',0)->get();
                foreach($tod_voucher as $tod){
                 $today_sale += $tod->total_price;
             }

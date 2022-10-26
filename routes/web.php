@@ -105,6 +105,7 @@ Route::group(['middleware' => ['UserAuth']], function () {
     //Expense Purchase
     Route::post('AjaxSearchPurchase', 'Web\AdminController@ajaxSearchPurchase')->name('ajaxSearchpurchase');
     Route::post('newOreditPurchase', 'Web\AdminController@newOreditPurchase')->name('newOreditPurchase');
+    Route::post('deletePurchaseExpense','Web\AdminController@deletePurchaseExpense')->name('deletePurchaseExpense');
 
     //Reorder List
     Route::get('reorder-list', 'Web\InventoryController@getReorderList')->name('reorder_list');
@@ -164,7 +165,8 @@ Route::group(['middleware' => ['UserAuth']], function () {
     // Manager Dashboard
     Route::post('getOrderFullfill', 'Web\AdminController@getTotalOrderFulfill');
     Route::post('getmonthpie', 'Web\AdminController@getmonthpie');
-    Route::post('getWeekNowFamous', 'Web\AdminController@getWeekNowFamous_Menu');
+    Route::post('getWeekNowFamous', 'Web\AdminController@getWeekN
+    owFamous_Menu');
     Route::post('getFamousWeek', 'Web\AdminController@getFamousWeek_data');
     Route::get('report','Web\AdminController@managerDashboard')->name('report');
 
@@ -212,6 +214,10 @@ Route::group(['middleware' => ['UserAuth']], function () {
 
     // waiter
     Route::post('waiterdone','Web\SaleController@done');
+    Route::get('cancelorder/{id}','Web\SaleController@cancelorder')->name('cancelorder');
+    Route::get('canceldetail/{order_id}/{option_id}','Web\SaleController@canceldetail')->name('canceldetail');
+    Route::get('canceldelidetail/{order_id}/{option_id}','Web\SaleController@canceldelidetail')->name('canceldelidetail');
+    Route::post('Voucher-Cancel','Web\SaleController@cancelvoucher');
 });
 
 

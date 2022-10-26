@@ -89,7 +89,7 @@
         </div>
 </div>
 
-    <div class="row md-12">
+    {{-- <div class="row md-12">
 		<div class="col-md-12">
             <div class="card card-stats mb-4" >
                 <div class="card-body font-weight-bold">
@@ -119,33 +119,82 @@
             </div>
 		</div>
 
-        {{-- unfamous menu items --}}
-        {{-- <div class="col-md-6">
-        <div class="card">
-            <div class="card-body font-weight-bold">
-                <div class="row mb-2">
-                    <div class="col-md-4">
-                        <label style="color:rgb(34, 190, 241)" class="pl-4 ml-3 pt-2 font-weight-bold  ">Day</label>
-                        <input type="date" name="receive_week" id="receive_week" class="border border-outline border-primary p-1" style="border-radius: 7px;" onchange="getweek(this.value)">
 
+
+	</div> --}}
+
+    <div class="row md-12">
+		<div class="col-md-4">
+            <div class="card card-stats mb-4" >
+                <div class="card-body font-weight-bold">
+                    <h5>Today Status</h5>
+                    <div class="row mt-4" style="margin-top:20px">
+                        <div class="col-md-8">
+                            Total Order
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                    </div>
+                    <div class="row mt-4" style="margin-top:20px">
+                        <div class="col-md-8">
+                            Total Delivery Order
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                    </div>
+                    <div class="row mt-4" style="margin-top:20px">
+                        <div class="col-md-8">
+                            Total Voucher Cancel
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                    </div>
+                    <div class="row mt-4" style="margin-top:20px">
+                        <div class="col-md-8">
+                            Total Unbreak Menu Item
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
                     </div>
 
-                    <div class="col-md-4 st_week" style="padding-left:50">
-                        <label style="color:rgb(34, 190, 241)" class="pl-4 ml-2 pt-2 font-weight-bold  ">Week</label>
-                        <input type="week" name="receive_week" id="receive_week" class="border border-outline border-primary p-1" style="border-radius: 7px;" onchange="getunfamousweek(this.value)">
+                    <div class="row mt-4" style="margin-top:20px">
+                        <div class="col-md-8">
+                            Total Purchase
+                        </div>
+                        <div class="col-md-4" id="testcolor">
+
+                        </div>
                     </div>
 
-                    <div class="col-md-4 st_month">
-                        <label style="color:rgb(34, 190, 241)" class="pl-4 ml-3 pt-2 font-weight-bold  ">Month</label>
-                        <input type="month" name="receive_month" id="receive_month" class="border border-outline border-primary p-1" style="border-radius: 7px;" onchange="getmonth(this.value)">
-                    </div>
 
                 </div>
-                <canvas id="densityChart1" width="600" height="400"></canvas>
             </div>
-        </div>
-        </div> --}}
+		</div>
+        <div class="col-md-4">
+            <div class="card card-stats mb-4" >
+                <div class="card-body font-weight-bold">
+                    <h5>Top Five Famous Menu Item</h5>
+                    <div class="row" id="famous_item">
 
+                    </div>
+                </div>
+            </div>
+		</div>
+
+        <div class="col-md-4">
+            <div class="card card-stats mb-4" >
+                <div class="card-body font-weight-bold">
+                    <h5>Five Unfamous Menu Item</h5>
+                    <div class="row" id="unfamous_item">
+
+                    </div>
+                </div>
+            </div>
+		</div>
 	</div>
 
 	<div class="row md-12">
@@ -521,94 +570,27 @@
             },
 
            success:function(data){
-            // alert(data[0].menu);
-            var menu_arr = [];
-            var menu_arr_count = [];
-            var qty = [];
-            var i=0;
-            var j=0;
-            for(i=0;i<data.length;i++)
-            {
-                if(data[i].count > 1)
-                {
-                    menu_arr.push(data[i].menu)
-                }
-            }
-            for(j=0;j<data.length;j++)
-            {
-                if(data[j].count > 1)
-                {
-                menu_arr_count.push(data[j].count)
-                }
-            }
-            // alert(menu_arr);
-            const densityCanvas = document.getElementById("densityChart");
-
-            let densityData = {
-            label: 'Famous Menu Items',
-            data: menu_arr_count,
-            backgroundColor: "pink",
-            };
-
-            let barChart = new Chart(densityCanvas, {
-            type: 'bar',
-            data: {
-                labels: menu_arr,
-                datasets: [densityData]
-            }
-            });
+            alert(data.famous_item);
+            var html = ''; var html1 = '';
+            $.each(data.famous_item,function(i,v){
+                html += `
+                <div class="col-md-8 mt-4" >
+                    ${v}
+                </div>
+                `;
+            })
+            $('#famous_item').html(html);
+            $.each(data.unfamous_item,function(i,b){
+                html += `
+                <div class="col-md-8 mt-4" >
+                    ${b}
+                </div>
+                `;
+            })
+            $('#famous_item').html(html);
            }
            });
 
-
-        // barchart unfamous menu
-        $.ajax({
-           type:'POST',
-           url:'/getWeekNowFamous',
-           dataType:'json',
-           data:{
-                "_token": "{{ csrf_token() }}",
-            },
-
-           success:function(data){
-            // alert(data[0].menu);
-            var menu_arr = [];
-            var menu_arr_count = [];
-            var qty = [];
-            var i=0;
-            var j=0;
-            for(i=0;i<data.length;i++)
-            {
-                if(data[i].count <= 1)
-                {
-                    menu_arr.push(data[i].menu)
-                }
-            }
-            for(j=0;j<data.length;j++)
-            {
-                if(data[j].count <= 1)
-                {
-                    menu_arr_count.push(data[j].count)
-                }
-            }
-            // alert(menu_arr);
-            const densityCanvas1 = document.getElementById("densityChart1");
-
-            let densityData1 = {
-            label: '10 Famous Menu Items',
-            data: menu_arr_count,
-            backgroundColor: "pink",
-            };
-
-            let barChart = new Chart(densityCanvas1, {
-            type: 'bar',
-            data: {
-                labels: menu_arr,
-                datasets: [densityData1]
-            }
-            });
-           }
-           });
 
         ///////////////////////
         $.ajax({

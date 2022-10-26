@@ -15,6 +15,7 @@
 @endsection
 
 @section('content')
+<?php $user = session()->get('user')->role_flag;?>
 <div class="row">
     <div class="col-md-12">
         <div class="card shadow">
@@ -45,7 +46,14 @@
 
                                     	{{-- <a href="{{route('deli_add_more_item', $order->id)}}" class="btn btn-success">Add More Item</a> --}}
 
-                                        <button class="btn btn-primary" onclick="storeVoucher({{$order->id}})">Store Voucher</button>
+                                        @if($user == 3)
+                                    	    {{-- <button class="btn" style="background-color:lightgreen;color:white;" onclick="done({{$order->table_id}})">Done</button> --}}
+                                            {{-- <button class="btn btn-danger" style="color:white;" onclick="cancel({{$order->id}})">Cancel</button> --}}
+                                            <a href="{{route('cancelorder', $order->id)}}" class="btn btn-danger">Cancel</a>
+                                    	@else
+                                    	    <button class="btn btn-primary" onclick="storeVoucher({{$order->id}})">Store Voucher</button>
+                                    	@endif
+                                        {{-- <button class="btn btn-primary" onclick="storeVoucher({{$order->id}})">Store Voucher</button> --}}
                                     </td>
 
                                 </tr>
@@ -350,6 +358,9 @@ function change_price(){
         //
 
     }
+
+   
+
 </script>
 
 

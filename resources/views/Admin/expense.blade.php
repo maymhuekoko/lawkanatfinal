@@ -33,10 +33,10 @@
                             </div>
 
                             <div class="col-sm-4 col-md-2" style="margin-top:30px;">
-                                <button class="btn btn-info btn-m btn-block mt-1" onclick="searchPurchase(this.value)" value="1">Search</button>
+                                <button class="btn btn-info btn-m btn-block mt-1" onclick="searchPurchase(this.value)" value="1" >Search</button>
                             </div>
                             <div class="col-sm-4 col-md-1" style="margin-top:30px;">
-                                <button class="btn btn-info btn-m btn-block mt-1" onclick="searchPurchase(this.value)" value="2"><i class="fa fa-plus"></i>Add</button>
+                                <button class="btn btn-info btn-m btn-block mt-1" onclick="searchPurchase(this.value)" value="2" ><i class="fa fa-plus"></i>Add</button>
                             </div>
                             <input type="hidden" name="search_add" id="search_add">
                         </div>
@@ -159,7 +159,6 @@
         var amount = $(this).data('amount');
         $("#amount").attr('value', amount);
 
-
         })
 
         $('#table_body').on('click','#editbtn2',function(){
@@ -181,7 +180,6 @@
 
         var amount = $(this).data('amount2');
         $("#amount").val(amount);
-
 
         })
 
@@ -230,17 +228,23 @@
                     $('#date').val(date);
                     $(".new_exp").hide(date);
                     $("#search_add").val(val);
+                    $(".edit_exp").show();
+                    $(".new_exp").hide();
                 }else{
                     $("#purchase_list").show();
                     $('#date').val(date);
                     $(".edit_exp").hide();
                     $("#search_add").val(val);
+                    $(".edit_exp").hide();
+                     $(".new_exp").show();
                 }
 
 
                 $.each(data, function(i, value) {
 
-                    let button = `<a class="btn btn-outline-warning" id="editbtn" data-id="${value.id}" data-title="${value.title}" data-date="${value.date}" data-description="${value.description}" data-amount="${value.amount}">Edit</a>`;
+                    let button = `<a class="btn btn-outline-warning" id="editbtn" data-id="${value.id}" data-title="${value.title}" data-date="${value.date}" data-description="${value.description}" data-amount="${value.amount}">Edit</a>
+                    <a class="btn btn-outline-danger" id="deletebtn" data-id="${value.id}">Delete</a>
+                    `;
 
 
                     $('#table_body').append($('<tr>')).append($('<td>').text(++i)).append($('<td>').text(value.title)).append($('<td>').text(value.date)).append($('<td>').text(value.description)).append($('<td>').text(value.amount)).append($('<td>').append($(button)));
@@ -291,15 +295,124 @@
         }
         $.each(data, function(i, value) {
 
-        let button = `<a class="btn btn-outline-warning" id="editbtn2" data-id2="${value.id}" data-title2="${value.title}" data-date2="${value.date}" data-description2="${value.description}" data-amount2="${value.amount}">Edit</a>`;
+        let button = `<a class="btn btn-outline-warning" id="editbtn2" data-id2="${value.id}" data-title2="${value.title}" data-date2="${value.date}" data-description2="${value.description}" data-amount2="${value.amount}">Edit</a>
+        <a class="btn btn-outline-danger" id="deletebtn2" data-id="${value.id}">Delete</a>
+        `;
 
 
         $('#table_body').append($('<tr>')).append($('<td>').text(++i)).append($('<td>').text(value.title)).append($('<td>').text(value.date)).append($('<td>').text(value.description)).append($('<td>').text(value.amount)).append($('<td>').append($(button)));
 
         });
+        $("#title").val('');
+        // $("#date").val('');
+        $("#description").val('');
+        $('#amount').val('');
         }
      })
     }
+
+    $('#table_body').on('click','#deletebtn',function(){
+        alert('hello');
+        $('#table_body').empty();
+        let id = $(this).data('id');
+        let date = $("#date").val();
+         let val = $("#search_add").val();
+
+        $.ajax({
+
+            type:'POST',
+
+            url:'deletePurchaseExpense',
+
+            data:{
+                "_token":"{{csrf_token()}}",
+                "id":id,
+                "date" : date,
+            },
+
+            success:function(data){
+                if(val == 1){
+            $("#purchase_list").show();
+            $('#date').val(date);
+            $(".new_exp").hide(date);
+            $("#search_add").val(val);
+        }else{
+            $("#purchase_list").show();
+            $('#date').val(date);
+            $(".edit_exp").hide();
+            $("#search_add").val(val);
+        }
+        $.each(data, function(i, value) {
+
+        let button = `<a class="btn btn-outline-warning" id="editbtn2" data-id2="${value.id}" data-title2="${value.title}" data-date2="${value.date}" data-description2="${value.description}" data-amount2="${value.amount}">Edit</a>
+        <a class="btn btn-outline-danger" id="deletebtn2" data-id="${value.id}">Delete</a>
+        `;
+
+
+        $('#table_body').append($('<tr>')).append($('<td>').text(++i)).append($('<td>').text(value.title)).append($('<td>').text(value.date)).append($('<td>').text(value.description)).append($('<td>').text(value.amount)).append($('<td>').append($(button)));
+
+        });
+        $("#title").val('');
+        // $("#date").val('');
+        $("#description").val('');
+        $('#amount').val('');
+            }
+
+            })
+
+    })
+
+    $('#table_body').on('click','#deletebtn2',function(){
+        alert('hey');
+        $('#table_body').empty();
+        let id = $(this).data('id');
+        let date = $("#date").val();
+         let val = $("#search_add").val();
+
+        $.ajax({
+
+            type:'POST',
+
+            url:'deletePurchaseExpense',
+
+            data:{
+                "_token":"{{csrf_token()}}",
+                "id":id,
+                "date" : date,
+            },
+
+            success:function(data){
+                if(val == 1){
+            $("#purchase_list").show();
+            $('#date').val(date);
+            $(".new_exp").hide(date);
+            $("#search_add").val(val);
+        }else{
+            $("#purchase_list").show();
+            $('#date').val(date);
+            $(".edit_exp").hide();
+            $("#search_add").val(val);
+        }
+        $.each(data, function(i, value) {
+
+        let button = `<a class="btn btn-outline-warning" id="editbtn2" data-id2="${value.id}" data-title2="${value.title}" data-date2="${value.date}" data-description2="${value.description}" data-amount2="${value.amount}">Edit</a>
+        <a class="btn btn-outline-danger" id="deletebtn2" data-id="${value.id}">Delete</a>
+        `;
+
+
+        $('#table_body').append($('<tr>')).append($('<td>').text(++i)).append($('<td>').text(value.title)).append($('<td>').text(value.date)).append($('<td>').text(value.description)).append($('<td>').text(value.amount)).append($('<td>').append($(button)));
+
+        });
+       $("#title").val('');
+        // $("#date").val('');
+        $("#description").val('');
+        $('#amount').val('');
+            }
+
+            })
+
+    })
+
 
 </script>
 

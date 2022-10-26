@@ -420,6 +420,13 @@ class AdminController extends Controller
 
 		return response()->json($expense_lists);
 	}
+
+    protected function deletePurchaseExpense(Request $request){
+        $del_exp = Expense::findOrFail($request->id);
+        $del_exp->delete();
+        $expense_lists = Expense::where('date', $request->date)->get();
+		return response()->json($expense_lists);
+    }
     //end date
 
     // public function mobileprint(Request $request)
@@ -997,58 +1004,38 @@ protected function getmonthpie(Request $request)
 function getWeekNowFamous_Menu()
 {
     // dd('hello');
-    $arr = [];
+    $arr = [];$arr_un = [];
     $now = Carbon::now();
     $weekStartDate = $now->startOfWeek()->format('Y-m-d');
     $weekEndDate = $now->endOfWeek()->format('Y-m-d');
-    $voucher_lists = Voucher::whereBetween('date', [$weekStartDate, $weekEndDate])->get();
-    // dd($weekStartDate, $weekEndDate);
-    foreach($voucher_lists as $vlist)
-    {
-        $voucher_option = DB::table('option_voucher')->where('voucher_id',$vlist->id)->get();
-        foreach($voucher_option as $vou){
-            $menu_name = Option::where('id',$vou->option_id)->get();
-            foreach($menu_name as $menu){
-                $item = MenuItem::where('id',$menu->menu_item_id)->get();
-               foreach($item as $it){
-                 array_push($arr,['id' => $it->id,'menu' => $it->item_name, 'count' => 0],);
-                // array_push($arr,$it->id);
-               }
-            }
-        }
-    }
-    // dd($arr);
-    // dd(array_count_values($arr));
-    $famous_menu = [];
-    $count = 0;
-    for($i=0;$i<count($arr);$i++)
-    {
-        $n = $arr[$i]['id'];
 
-        // [26,27,51,31,44,27,26]
-        // dd($arr[$i]['id']."-----".$arr[$j]['id']);
-        for($j=0;$j<count($arr);$j++)
-        {
-            if($n == $arr[$j]['id'])
-            {
-                $arr[$i]['count'] +=2;
+    $duplicates = DB::table('option_voucher')
+    ->select('option_id', DB::raw('COUNT(*) as `count`'))
+    ->groupBy('option_id')
+    ->havingRaw('COUNT(*) > 1')
+    ->take(5)
+    ->get();
 
-            }
-
-        }
-
-
+    foreach($duplicates as $dup){
+        $menu = Option::where('id',$dup->option_id)->with('menu_item')->first();
+        // dd($menu->menu_item->item_name);
+        array_push($arr,$menu->menu_item->item_name);
     }
 
-    $arr_menu = array_unique($arr, SORT_REGULAR);
+    $options = DB::table('option_voucher')->get();
+    foreach($options as $opt){
+        $un_menu = Option::where('id','<>',$opt->option_id)->get();
+    }
 
-    return response()->json($arr_menu);
-
+    return response()->json([
+        'famous_item' => $arr,
+        'unfamous_item' => $arr_un
+    ]);
 }
 
 // manager dashboard
 public function managerDashboard(){
-    $voucher = Voucher::all();
+    $voucher = Voucher::where('status',0)->get();
             $purchase = Purchase::all();
             $expense = Expense::all();
             $total_sale = 0;$today_sale = 0;$total_inventory = 0;$total_expense=0;$total_profit= 0;
@@ -1056,7 +1043,7 @@ public function managerDashboard(){
             foreach($voucher as $vou){
                 $total_sale += $vou->total_price;
             }
-            $tod_voucher = Voucher::where('date',$today)->get();
+            $tod_voucher = Voucher::where('date',$today)->where('status',0)->get();
                foreach($tod_voucher as $tod){
                 $today_sale += $tod->total_price;
             }
@@ -1069,59 +1056,59 @@ public function managerDashboard(){
             $menu = MenuItem::all()->count();
             return view('report',compact('total_sale','today_sale','total_inventory','menu','total_expense'));
 }
-public function getFamousWeek_data(Request $request)
-{
-    // dd($request->famous_week);
-    $arr = [];
-    if($request->type == 2){
-        $weekStartDate = Carbon::parse($request->famous_week)->startOfWeek()->format('Y-m-d');
-    $weekEndDate = Carbon::parse($request->famous_week)->endOfWeek()->format('Y-m-d');
-    // dd($weekStartDate);
-    $voucher_lists = Voucher::whereBetween('date', [$weekStartDate, $weekEndDate])->get();
-    }
-    else if($request->type == 1){
-        $voucher_lists = Voucher::where('date', $request->famous_day)->get();
-    }
+// public function getFamousWeek_data(Request $request)
+// {
+//     // dd($request->famous_week);
+//     $arr = [];
+//     if($request->type == 2){
+//         $weekStartDate = Carbon::parse($request->famous_week)->startOfWeek()->format('Y-m-d');
+//     $weekEndDate = Carbon::parse($request->famous_week)->endOfWeek()->format('Y-m-d');
+//     // dd($weekStartDate);
+//     $voucher_lists = Voucher::whereBetween('date', [$weekStartDate, $weekEndDate])->get();
+//     }
+//     else if($request->type == 1){
+//         $voucher_lists = Voucher::where('date', $request->famous_day)->get();
+//     }
 
-    foreach($voucher_lists as $vlist)
-    {
-        $voucher_option = DB::table('option_voucher')->where('voucher_id',$vlist->id)->get();
-        foreach($voucher_option as $vou){
-            $menu_name = Option::where('id',$vou->option_id)->get();
-            foreach($menu_name as $menu){
-                $item = MenuItem::where('id',$menu->menu_item_id)->get();
-               foreach($item as $it){
-                 array_push($arr,['id' => $it->id,'menu' => $it->item_name, 'count' => 0],);
-                // array_push($arr,$it->id);
-               }
-            }
-        }
-    }
-    // dd($arr);
-    // dd(array_count_values($arr));
-    $famous_menu = [];
-    $count = 0;
-    for($i=0;$i<count($arr);$i++)
-    {
-        $n = $arr[$i]['id'];
+//     foreach($voucher_lists as $vlist)
+//     {
+//         $voucher_option = DB::table('option_voucher')->where('voucher_id',$vlist->id)->get();
+//         foreach($voucher_option as $vou){
+//             $menu_name = Option::where('id',$vou->option_id)->get();
+//             foreach($menu_name as $menu){
+//                 $item = MenuItem::where('id',$menu->menu_item_id)->get();
+//                foreach($item as $it){
+//                  array_push($arr,['id' => $it->id,'menu' => $it->item_name, 'count' => 0],);
+//                 // array_push($arr,$it->id);
+//                }
+//             }
+//         }
+//     }
+//     // dd($arr);
+//     // dd(array_count_values($arr));
+//     $famous_menu = [];
+//     $count = 0;
+//     for($i=0;$i<count($arr);$i++)
+//     {
+//         $n = $arr[$i]['id'];
 
-        // [26,27,51,31,44,27,26]
-        // dd($arr[$i]['id']."-----".$arr[$j]['id']);
-        for($j=0;$j<count($arr);$j++)
-        {
-            if($n == $arr[$j]['id'])
-            {
-                $arr[$i]['count'] +=1;
+//         // [26,27,51,31,44,27,26]
+//         // dd($arr[$i]['id']."-----".$arr[$j]['id']);
+//         for($j=0;$j<count($arr);$j++)
+//         {
+//             if($n == $arr[$j]['id'])
+//             {
+//                 $arr[$i]['count'] +=1;
 
-            }
+//             }
 
-        }
+//         }
 
 
-    }
-    $arr_menu = array_unique($arr, SORT_REGULAR);
-    // dd($arr_menu);
-    return response()->json($arr_menu);
-}
+//     }
+//     $arr_menu = array_unique($arr, SORT_REGULAR);
+//     // dd($arr_menu);
+//     return response()->json($arr_menu);
+// }
 
 }

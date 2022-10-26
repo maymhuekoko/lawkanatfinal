@@ -73,7 +73,7 @@ class SaleController extends Controller
 		try {
 
 		$pending_order_details = ShopOrder::findOrFail($order_id);
-
+            // dd($pending_order_details->option);
 		} catch (\Exception $e) {
 
         	alert()->error("Pending Order Not Found!")->persistent("Close!");
@@ -1077,5 +1077,88 @@ foreach($code_lists as $code){
         return response()->json([
             "data" => 'success'
             ],200);
+    }
+    protected function cancelorder($id){
+        $order = ShopOrder::find($id);
+        $table = Table::find($order->table_id);
+        $table->status = 1;
+        $table->save();
+        $order->delete();
+        DB::table('option_shop_order')->where('shop_order_id',$id)->delete();
+
+        $pending_lists = ShopOrder::where('status', 1)->get();
+
+        return view('Sale.pending_lists',compact('pending_lists'));
+    }
+    protected function canceldetail(Request $request){
+        // dd($request->option_id);
+        DB::table('option_shop_order')->where('shop_order_id',$request->order_id)->where('option_id',$request->option_id)->delete();
+
+        alert()->success("Successfully Canceled!")->persistent("Close!");
+
+        $table_number = 0;
+		try {
+
+		$pending_order_details = ShopOrder::findOrFail($request->order_id);
+            // dd($pending_order_details->option);
+		} catch (\Exception $e) {
+
+        	alert()->error("Pending Order Not Found!")->persistent("Close!");
+
+            return redirect()->back();
+    	}
+
+    	$total_qty = 0 ;
+
+    	$total_price = 0 ;
+
+    	foreach ($pending_order_details->option as $option) {
+
+			$total_qty += $option->pivot->quantity;
+
+			$total_price += $option->sale_price * $option->pivot->quantity;
+		}
+
+    	return view('Sale.pending_order_details', compact('pending_order_details','total_qty','total_price','table_number'));
+    }
+    protected function canceldelidetail(Request $request){
+        // dd($request->option_id);
+        DB::table('option_order')->where('order_id',$request->order_id)->where('option_id',$request->option_id)->delete();
+
+        alert()->success("Successfully Canceled!")->persistent("Close!");
+
+        $table_number = 0;
+		try {
+
+		$pending_order_details = Order::findOrFail($request->order_id);
+
+		} catch (\Exception $e) {
+
+        	alert()->error("Pending Order Not Found!")->persistent("Close!");
+
+            return redirect()->back();
+    	}
+
+    	$total_qty = 0 ;
+
+    	$total_price = 0 ;
+
+    	foreach ($pending_order_details->option as $option) {
+
+			$total_qty += $option->pivot->quantity;
+
+			$total_price += $option->sale_price * $option->pivot->quantity;
+		}
+
+    	return view('Sale.delivery_pending_order_details', compact('pending_order_details','total_qty','total_price','table_number'));
+    }
+
+    protected function cancelvoucher(Request $request){
+        $voucher = Voucher::find($request->voucher_id);
+        $voucher->status = 5;
+        $voucher->save();
+        return response()->json([
+            'data' => 'success'
+        ],200);
     }
 }
