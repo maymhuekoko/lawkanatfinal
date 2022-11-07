@@ -43,7 +43,8 @@
                     <img src="{{asset('image/lawkanat.png')}}" alt="" width="120" height="120" style="  margin-left: auto;
                     margin-right: auto;margin-bottom: 20px;">
                     <span class="login100-form-title p-b-32 text-success text-center">
-                        ​လောကနတ်
+                        {{-- ​လောကနတ် --}}
+                        {{-- K-Win Restaurant POS --}}
                     </span>
 
                     <span class="txt1 p-b-11">

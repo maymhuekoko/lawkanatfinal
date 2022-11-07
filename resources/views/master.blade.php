@@ -70,7 +70,7 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                             <img src="{{asset('image/lawkanat.png')}}" alt="" width="40px" height="40px">
-                            <h2 class="text-white font-weight-bold font-italic ml-2">​လောကနတ်</h2>
+                            <h2 class="text-white font-weight-bold font-italic ml-2">လောကနတ်</h2>
                             <input type="hidden" id="unique_role" value="{{session()->get('user')->role_flag}}">
                         <!-- ============================================================== -->
                         <!-- End Messages -->
@@ -248,6 +248,7 @@
                                 <li><a href="{{route('getfinicial')}}">Financial</a></li>
                                 <li><a href="{{route('expense')}}">Purchase Expense List</a></li>
                                 <li><a href="{{route('sale_record')}}">Sale Count</a></li>
+                                <li><a href="{{route('promotion_create')}}">Promotion List</a></li>
                             </ul>
                         </li>
                         @endif
@@ -327,7 +328,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer"> © 2018 Material Pro Admin by wrappixel.com </footer>
+            {{-- <footer class="footer"> © 2018 Material Pro Admin by wrappixel.com </footer> --}}
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->

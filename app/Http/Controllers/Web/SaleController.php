@@ -11,6 +11,7 @@ use App\Table;
 use App\Option;
 use App\Voucher;
 use App\MenuItem;
+use App\Promotion;
 use App\ShopOrder;
 use App\TableType;
 use App\Ingredient;
@@ -42,7 +43,9 @@ class SaleController extends Controller
 
 		$pending_lists = ShopOrder::where('status', 1)->get();
 
-		return view('Sale.pending_lists', compact('pending_lists'));
+        $promotion = Promotion::all();
+
+		return view('Sale.pending_lists', compact('pending_lists','promotion'));
 	}
 
     protected function getPendingDeliveryOrderList(){

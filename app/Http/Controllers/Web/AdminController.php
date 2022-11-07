@@ -19,6 +19,7 @@ use App\CuisineType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Promotion;
 use App\Purchase;
 use Illuminate\Support\Facades\Validator;
 
@@ -1009,7 +1010,7 @@ function getWeekNowFamous_Menu()
     $weekStartDate = $now->startOfWeek()->format('Y-m-d');
     $weekEndDate = $now->endOfWeek()->format('Y-m-d');
 
-    
+
     $duplicates = DB::table('option_voucher')
     ->select('option_id', DB::raw('COUNT(*) as `count`'))
     ->groupBy('option_id')
@@ -1121,5 +1122,97 @@ public function managerDashboard(){
 //     // dd($arr_menu);
 //     return response()->json($arr_menu);
 // }
+
+public function getPromotionList(Request $request){
+    $promotion = Promotion::all();
+    $menu = MenuItem::all();
+    return view('Admin.promotion_create',compact('promotion','menu'));
+}
+
+public function storePromotion(Request $request){
+    // dd($request->all());
+    $validator = Validator::make($request->all(), [
+        'title' => 'required',
+        'start_date' => 'required',
+        'end_date' => 'required',
+    ]);
+
+    if ($validator->fails()) {
+
+        alert()->error("Something Wrong! Validation Error");
+
+        return redirect()->back();
+    }
+
+    $promotion = Promotion::create([
+        'title' => $request->title,
+        'start_date' => $request->start_date,
+        'end_date' => $request->end_date,
+        'customer_console' => 1,
+    ]);
+    $html = ''; $html1 = '';
+    if($request->flexRadio == 1){
+        $promotion->reward = 1;
+        $promotion->amount = $request->amount;
+    }
+    else if($request->flexRadio == 2){
+        $promotion->reward = 2;
+        foreach($request->menuitem as $menu){
+            $html .= $menu.',';
+        }
+        $promotion->foc_items = $html;
+    }
+    else{
+        $promotion->reward = 3;
+        $promotion->percent = $request->percentage;
+    }
+
+    if($request->flexRadio1 == 1){
+        $promotion->type = 1;
+        $promotion->voucher_amount = $request->voucher_amount;
+    }
+    else if($request->flexRadio1 == 2){
+        $promotion->type = 2;
+        foreach($request->purchaseitem as $purchase){
+            $html1 .= $purchase.',';
+        }
+        $promotion->purchase_item = $html1;
+    }
+    else{
+        $promotion->type = 3;
+        $promotion->purchase_time = $request->purchase_time;
+    }
+    $promotion->save();
+
+    alert()->success('Promotion is successfully Created!');
+    return redirect()->back();
+}
+
+protected function deletePromotion($id) //Not Finish
+    {
+
+        $item = Promotion::find($id);
+
+        $item->delete();
+
+        alert()->success('Successfully Deleted!');
+        return back();
+    }
+protected function checkPromotion(Request $request){
+    $currentDate = Carbon::now();
+    $promotion = Promotion::find($request->promotion_id);
+    $order = ShopOrder::where('id',$request->order_id)->first();
+
+    if (($currentDate >= $promotion->start_date) && ($currentDate <= $promotion->end_date)){
+        $promo = $promotion;
+      }else{
+        $promo = [];
+      }
+
+    return response()->json([
+        "promotion" => $promo,
+        "order" => $order
+    ]);
+}
 
 }

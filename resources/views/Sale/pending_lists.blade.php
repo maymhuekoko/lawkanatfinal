@@ -177,6 +177,32 @@
                 <label class="font-weight-bold">Change</label>
                 <input type="text" class="form-control" readonly id="change_amount_dis" value="">
             </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group mt-3" id="promotion">
+                        <label class="control-label">Promotion</label>
+                           <div class="switch">
+                               <label>OFF
+                               <input type="checkbox"  name="customer_console" id="console" onchange="promotion_on()"><span class="lever"></span>ON</label>
+                            </div>
+                   </div>
+                </div>
+                <div class="col-9">
+                    <div class="form-group mt-3" id="promotion_name">
+                        <label class="font-weight-bold">Choose Promotion</label>
+                        <select class="form-control" name="purchaseitem" onchange="promotionchange(this.value)">
+                            <option value="" hidden>Select Promotion</option>
+                            @foreach ($promotion as $p)
+                            <option value="{{$p->id}}">{{$p->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="ispromotion">
+
+            </div>
+
         </div>
         <div class="modal-footer" id="dis_footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -195,6 +221,7 @@
     $('#dis_foc').hide();
     $('#dis_percent').hide();
     $('#dis_amount').hide();
+
 })
 function yes_radio(){
     // alert('yes');
@@ -206,6 +233,7 @@ function no_radio(){
     $('#dis_voucher_total').show();
     $('#dis_pay_amount').show();
     $('#dis_change_amount').show();
+    $('#promotion').show();
     $('#dis_footer').show();
 }
 function foc_radio(){
@@ -253,6 +281,15 @@ function pay_dis(val){
     var curr_amt = $('#voucher_total_dis').val();
     $('#change_amount_dis').val(val - curr_amt);
 }
+function promotion_on(){
+    if($('#console').prop("checked") == true){
+         var console = 1;
+         $('#promotion_name').show();
+    }else{
+       var console = 0;
+       $('#promotion_name').hide();
+    }
+}
 function change_price(){
     // $('#voudiscount').modal('hide');
     var order_id = $('#hid_order_id').val();
@@ -262,6 +299,11 @@ function change_price(){
     var change_value = $('#change_amount').val();
     var pay_value_dis = $('#pay_amount_dis').val();
     var change_value_dis = $('#change_amount_dis').val();
+    if($('#console').prop("checked") == true){
+         var console = 1;
+    }else{
+       var console = 0;
+    }
 
     // alert(change_value_dis);
     if(change_value_dis>=0 && change_value>=0){
@@ -280,6 +322,7 @@ function change_price(){
         "change_amount" : change_value,
         "pay_amount_dis" : pay_value_dis,
         "change_amount_dis" : change_value_dis,
+        "customer_console" : console
         },
 
         success:function(data){
@@ -351,6 +394,8 @@ function change_price(){
         $('#dis_voucher_total').hide();
         $('#dis_pay_amount').hide();
         $('#dis_change_amount').hide();
+        $('#promotion').hide();
+        $('#promotion_name').hide();
         $('#dis_footer').hide();
         //
     }
@@ -376,6 +421,71 @@ function change_price(){
 
             }
             })
+    }
+
+    function promotionchange(id){
+        let order = $('#hid_order_id').val();
+        $.ajax({
+
+        type:'POST',
+
+        url:'/PromotionCheck',
+
+        data:{
+        "_token":"{{csrf_token()}}",
+        "promotion_id":id,
+        "order_id": order,
+        },
+
+        success:function(data){
+            let html = '';
+           if(data.promotion.length == 0){
+            $('#ispromotion').html('<span class="text-danger offset-3">This promotion is expired.</span>')
+           }else{
+           if (data.promotion.reward == 1)
+                                                    <div class="col-4">
+                                                        <h5>Cash Back</h5>
+                                                    </div>
+                                                    <div class="offset-1 col-5">
+                                                        <h5 class="font-weight-bold">Cash Back Amount</h5>
+                                                    </div>
+                                                    <div class="col-1 font-weight-bold">
+                                                        :
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <h5>{{$item->amount}}</h5>
+                                                    </div>
+                                                    @elseif($item->reward == 2)
+                                                    <div class="col-4">
+                                                        <h5>FOC Items</h5>
+                                                    </div>
+                                                    <div class="offset-1 col-5">
+                                                        <h5 class="font-weight-bold">FOC Items</h5>
+                                                    </div>
+                                                    <div class="col-1 font-weight-bold">
+                                                        :
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <h5>{{$item->foc_items}}</h5>
+                                                    </div>
+                                                    @else
+                                                    <div class="col-4">
+                                                    <h5>Discount</h5>
+                                                    </div>
+                                                    <div class="offset-1 col-5">
+                                                        <h5 class="font-weight-bold">Discount Percentage</h5>
+                                                    </div>
+                                                    <div class="col-1 font-weight-bold">
+                                                        :
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <h5>{{$item->percent}} %</h5>
+                                                    </div>
+                                                    @endif
+           }
+        }
+        })
+
     }
 
 

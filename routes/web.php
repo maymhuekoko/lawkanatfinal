@@ -83,6 +83,7 @@ Route::group(['middleware' => ['UserAuth']], function () {
     Route::post('menu-item/update/{id}', 'Web\InventoryController@updateMenuItem')->name('menu_item_update');
     Route::post('menu-item/delete', 'Web\InventoryController@deleteMenuItem')->name('menu.delete');
 
+
     //Ingredient List
     Route::get('ingredient-list', 'Web\InventoryController@getIngredientList')->name('ingredient_list');
     Route::post('ingredient-list/store', 'Web\InventoryController@storeIngredient')->name('store_ingredient');
@@ -106,6 +107,12 @@ Route::group(['middleware' => ['UserAuth']], function () {
     Route::post('AjaxSearchPurchase', 'Web\AdminController@ajaxSearchPurchase')->name('ajaxSearchpurchase');
     Route::post('newOreditPurchase', 'Web\AdminController@newOreditPurchase')->name('newOreditPurchase');
     Route::post('deletePurchaseExpense','Web\AdminController@deletePurchaseExpense')->name('deletePurchaseExpense');
+
+    //Promotion List
+    Route::get('PromotionList', 'Web\AdminController@getPromotionList')->name('promotion_create');
+    Route::post('StorePromotion', 'Web\AdminController@storePromotion')->name('promotion_store');
+    Route::get('promotion/delete/{id}', 'Web\AdminController@deletePromotion')->name('promotion.delete');
+    Route::post('PromotionCheck', 'Web\AdminController@checkPromotion')->name('promotion_check');
 
     //Reorder List
     Route::get('reorder-list', 'Web\InventoryController@getReorderList')->name('reorder_list');

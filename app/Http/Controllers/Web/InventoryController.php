@@ -381,6 +381,8 @@ class InventoryController extends Controller
         return back();
     }
 
+    
+
     protected function getOptionList($item_id)
     {
 
