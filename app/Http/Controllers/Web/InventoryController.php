@@ -381,7 +381,7 @@ class InventoryController extends Controller
         return back();
     }
 
-    
+
 
     protected function getOptionList($item_id)
     {
@@ -435,9 +435,9 @@ class InventoryController extends Controller
 
         $user_code = $request->session()->get('user')->id;
 
-        $amount = $request->amount;
+        // $amount = $request->amount;
 
-        $ingredient = $request->ingredient;
+        // $ingredient = $request->ingredient;
 
         try {
 
@@ -451,11 +451,11 @@ class InventoryController extends Controller
             ]);
 
 
-            for($count = 0; $count < count($amount); $count++){
+            // for($count = 0; $count < count($amount); $count++){
 
-                $option->ingredient()->attach($ingredient[$count], ['amount' => $amount[$count]]);
+            //     $option->ingredient()->attach($ingredient[$count], ['amount' => $amount[$count]]);
 
-            }
+            // }
 
         } catch (\Exception $e) {
 
