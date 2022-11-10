@@ -210,6 +210,66 @@
                     </div>
 
             </div>
+            <div class="tab-pane" id="7" role="tabpanel">
+                <div class="row mt-3">
+                    @foreach($items as $item)
+                    @if($item->cuisine_type_id == 7)
+
+                    <div class="card col-md-3" style="width: 18rem;margin-left:42px;">
+                        <img src="{{asset('/image/photo.jpg')}}" class="card-img-top mb-3 mt-2" height="125rem" alt="..." style='object-fit: cover;'>
+                        <div style="height:40px;">
+                            <h6 class="card-title text-center font-weight bold" style="font-size:12px;">{{$item->item_name}}</h6>
+                        </div>
+
+
+                        <i class="btn btn-sm btn-success" onclick="getCountingUnit({{$item->id}})"><i class="fas fa-plus"></i>Sale</i>
+
+                    </div>
+                    @endif
+                    @endforeach
+                    </div>
+
+            </div>
+            <div class="tab-pane" id="8" role="tabpanel">
+                <div class="row mt-3">
+                    @foreach($items as $item)
+                    @if($item->cuisine_type_id == 8)
+
+                    <div class="card col-md-3" style="width: 18rem;margin-left:42px;">
+                        <img src="{{asset('/image/photo.jpg')}}" class="card-img-top mb-3 mt-2" height="125rem" alt="..." style='object-fit: cover;'>
+                        <div style="height:40px;">
+                            <h6 class="card-title text-center font-weight bold" style="font-size:12px;">{{$item->item_name}}</h6>
+                        </div>
+
+
+                        <i class="btn btn-sm btn-success" onclick="getCountingUnit({{$item->id}})"><i class="fas fa-plus"></i>Sale</i>
+
+                    </div>
+                    @endif
+                    @endforeach
+                    </div>
+
+            </div>
+            <div class="tab-pane" id="9" role="tabpanel">
+                <div class="row mt-3">
+                    @foreach($items as $item)
+                    @if($item->cuisine_type_id == 9)
+
+                    <div class="card col-md-3" style="width: 18rem;margin-left:42px;">
+                        <img src="{{asset('/image/photo.jpg')}}" class="card-img-top mb-3 mt-2" height="125rem" alt="..." style='object-fit: cover;'>
+                        <div style="height:40px;">
+                            <h6 class="card-title text-center font-weight bold" style="font-size:12px;">{{$item->item_name}}</h6>
+                        </div>
+
+
+                        <i class="btn btn-sm btn-success" onclick="getCountingUnit({{$item->id}})"><i class="fas fa-plus"></i>Sale</i>
+
+                    </div>
+                    @endif
+                    @endforeach
+                    </div>
+
+            </div>
 
             <div class="modal fade" id="remark_table_modal" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-m" role="document">
