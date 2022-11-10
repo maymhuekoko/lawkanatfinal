@@ -7,7 +7,7 @@
 </style>
 <div class="content">
     <div class="row">
-        <div class="col-xl-2 col-lg-6">
+        <div class="col-xl-3 col-lg-6">
             <div class="card card-stats mb-4">
                 <div class="card-body">
                     <p class="mt-1 mb-0 text-success font-weight-normal text-sm">
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-2 col-lg-6">
+        <div class="col-xl-3 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                     <p class="mt-1 mb-0 text-success font-weight-normal text-sm">
@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-2 col-lg-6">
+        {{-- <div class="col-xl-1 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                     <p class="mt-1 mb-0 text-success font-weight-normal text-sm">
@@ -106,7 +106,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
 </div>
 
     {{-- <div class="row md-12">
