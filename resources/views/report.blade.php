@@ -7,7 +7,7 @@
 </style>
 <div class="content">
     <div class="row">
-        <div class="col-xl-3 col-lg-6">
+        <div class="col-xl-2 col-lg-6">
             <div class="card card-stats mb-4">
                 <div class="card-body">
                     <p class="mt-1 mb-0 text-success font-weight-normal text-sm">
@@ -51,7 +51,7 @@
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                     <p class="mt-1 mb-0 text-success font-weight-normal text-sm">
-                    <span>Total Inventory Amount</span>
+                    <span>Total Purchase Amount</span>
                     </p>
                     <div class="row mt-2">
                         <div class="col">
@@ -67,11 +67,31 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6">
+        <div class="col-xl-2 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                     <p class="mt-1 mb-0 text-success font-weight-normal text-sm">
-                    <span>Menu Count</span>
+                    <span>Total Profit & Loss</span>
+                    </p>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <span class="h2 font-weight-normal mb-0 text-info" style="font-size: 20px;">{{$total_sale - $total_expense}}  Ks</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape text-white rounded-circle shadow" style="background-color:#473C70;">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <p class="mt-1 mb-0 text-success font-weight-normal text-sm">
+                    <span>Menu</span>
                     </p>
                     <div class="row mt-2">
                         <div class="col">
