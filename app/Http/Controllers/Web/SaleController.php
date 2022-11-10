@@ -67,8 +67,9 @@ class SaleController extends Controller
 	protected function gotopendinglists(){
 
 		$pending_lists = ShopOrder::where('status', 1)->get();
+        $promotion = Promotion::all();
 
-		return view('Sale.pending_lists', compact('pending_lists'));
+		return view('Sale.pending_lists', compact('pending_lists','promotion'));
 	}
 
 	protected function getPendingShopOrderDetails($order_id){
@@ -711,6 +712,10 @@ foreach($code_lists as $code){
         }else{
             $voucher->pay_value = $request->pay_amount_dis;
             $voucher->change_value = $request->change_amount_dis;
+        }
+        if($request->promotion !=0 && $request->promotion_value !=0){
+            $voucher->promotion = $request->promotion;
+            $voucher->promotion_value = $request->promotionvalue;
         }
 
     	$voucher->voucher_code = "VOU-".date('dmY')."-".sprintf("%04s", $voucher->id);

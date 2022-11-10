@@ -299,13 +299,24 @@ function change_price(){
     var change_value = $('#change_amount').val();
     var pay_value_dis = $('#pay_amount_dis').val();
     var change_value_dis = $('#change_amount_dis').val();
+    var ispromotion = $('#ispromotion').text();
     if($('#console').prop("checked") == true){
          var console = 1;
+        if(ispromotion == 'This promotion is expired.' || ispromotion == 'This voucher amount is less than promotion amount.'){
+          var promotion = 0;
+          var promotion_value = 0;
+        }else{
+          var p = ispromotion.split(":");
+          var promotion = p[0];
+          var promotion_value = p[1];
+        }
     }else{
        var console = 0;
+       var promotion = 0;
+       var promotion_value = 0;
     }
+   
 
-    // alert(change_value_dis);
     if(change_value_dis>=0 && change_value>=0){
         $.ajax({
 
@@ -322,7 +333,9 @@ function change_price(){
         "change_amount" : change_value,
         "pay_amount_dis" : pay_value_dis,
         "change_amount_dis" : change_value_dis,
-        "customer_console" : console
+        "customer_console" : console,
+        "promotion" : promotion,
+        "promotionvalue" : promotion_value,
         },
 
         success:function(data){
@@ -438,7 +451,31 @@ function change_price(){
         },
 
         success:function(data){
-      
+            let html = '';
+           if(data.promotion.length == 0){
+            $('#ispromotion').html('<span class="text-danger offset-3">This promotion is expired.</span>')
+           }else{
+             if(data.promotion.type == 1){
+                var vtotal = $('#voucher_total_dis').val();
+                if(data.promotion.voucher_amount <= vtotal){
+                if(data.promotion.reward == 1){
+                    html += `<span class="text-success text-center offset-1">Cash Back : ${data.promotion.amount}</span>`;
+                    $('#ispromotion').html(html);
+                }else if(data.promotion.reward == 2){
+                    html += `<span class="text-success text-center offset-1">FOC Items : ${data.promotion.foc_items}</span>`;
+                    $('#ispromotion').html(html);
+                }
+               else{
+                    html += `<span class="text-success text-center offset-1">Discount Percentage : ${data.promotion.percent} %</span>`;
+                    $('#ispromotion').html(html);
+                }
+            }
+            else{
+                $('#ispromotion').html('<span class="text-danger offset-3">This voucher amount is less than promotion amount.</span>');
+            }
+             }
+
+           }
         }
         })
 
