@@ -438,51 +438,7 @@ function change_price(){
         },
 
         success:function(data){
-            let html = '';
-        //    if(data.promotion.length == 0){
-        //     $('#ispromotion').html('<span class="text-danger offset-3">This promotion is expired.</span>')
-        //    }else{
-        //    if (data.promotion.reward == 1)
-        //                                             <div class="col-4">
-        //                                                 <h5>Cash Back</h5>
-        //                                             </div>
-        //                                             <div class="offset-1 col-5">
-        //                                                 <h5 class="font-weight-bold">Cash Back Amount</h5>
-        //                                             </div>
-        //                                             <div class="col-1 font-weight-bold">
-        //                                                 :
-        //                                             </div>
-        //                                             <div class="col-5">
-        //                                                 <h5>{{$item->amount}}</h5>
-        //                                             </div>
-        //                                             @elseif($item->reward == 2)
-        //                                             <div class="col-4">
-        //                                                 <h5>FOC Items</h5>
-        //                                             </div>
-        //                                             <div class="offset-1 col-5">
-        //                                                 <h5 class="font-weight-bold">FOC Items</h5>
-        //                                             </div>
-        //                                             <div class="col-1 font-weight-bold">
-        //                                                 :
-        //                                             </div>
-        //                                             <div class="col-5">
-        //                                                 <h5>{{$item->foc_items}}</h5>
-        //                                             </div>
-        //                                             @else
-        //                                             <div class="col-4">
-        //                                             <h5>Discount</h5>
-        //                                             </div>
-        //                                             <div class="offset-1 col-5">
-        //                                                 <h5 class="font-weight-bold">Discount Percentage</h5>
-        //                                             </div>
-        //                                             <div class="col-1 font-weight-bold">
-        //                                                 :
-        //                                             </div>
-        //                                             <div class="col-5">
-        //                                                 <h5>{{$item->percent}} %</h5>
-        //                                             </div>
-        //                                             @endif
-        //    }
+      
         }
         })
 
