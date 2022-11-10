@@ -95,12 +95,18 @@
                                          <strong>{{$voucher->promotion}} - {{$voucher->promotion_value}}</strong><br>
                                           @if (explode(' ',$voucher->promotion_value)[1] == '%')
                                           <strong>Total - {{$voucher->total_price-($voucher->total_price*(explode(' ',$voucher->promotion_value)[0])/100)}}</strong><br>
+                                          <strong>Pay - {{$voucher->pay_value}}</strong><br>
+                                          <strong>Change - {{$voucher->pay_value - ($voucher->total_price-($voucher->total_price*(explode(' ',$voucher->promotion_value)[0])/100))}}</strong><br>
                                           @else
                                           <strong>Total - {{$voucher->total_price - $voucher->promotion_value}}</strong><br>
+                                          <strong>Pay - {{$voucher->pay_value}}</strong><br>
+                                          <strong>Change - {{$voucher->pay_value - ($voucher->total_price - $voucher->promotion_value)}}</strong><br>
                                           @endif
+                                          @else
+                                          <strong>Pay - {{$voucher->pay_value}}</strong><br>
+                                          <strong>Change - {{$voucher->change_value}}</strong><br>
                                          @endif
-                                         <strong>Pay - {{$voucher->pay_value}}</strong><br>
-                                         <strong>Change - {{$voucher->change_value}}</strong><br>
+
                                          @if ($voucher->promotion == 'FOC Items')
                                          <strong>{{$voucher->promotion}} - {{$voucher->promotion_value}}</strong><br>
                                          @endif

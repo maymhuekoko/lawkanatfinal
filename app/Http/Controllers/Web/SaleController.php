@@ -695,6 +695,7 @@ foreach($code_lists as $code){
             $total_qty += $option->pivot->quantity;
         }
         //  dd($request->change_amount_dis);
+
         $voucher = Voucher::create([
             'sale_by' => $user_code,
             'total_price' =>  $total,
@@ -713,7 +714,7 @@ foreach($code_lists as $code){
             $voucher->pay_value = $request->pay_amount_dis;
             $voucher->change_value = $request->change_amount_dis;
         }
-        if($request->promotion !=0 && $request->promotion_value !=0){
+        if($request->promotion !=0 && $request->promotionvalue !=0){
             $voucher->promotion = $request->promotion;
             $voucher->promotion_value = $request->promotionvalue;
         }
