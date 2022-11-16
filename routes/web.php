@@ -107,6 +107,7 @@ Route::group(['middleware' => ['UserAuth']], function () {
     Route::post('AjaxSearchPurchase', 'Web\AdminController@ajaxSearchPurchase')->name('ajaxSearchpurchase');
     Route::post('newOreditPurchase', 'Web\AdminController@newOreditPurchase')->name('newOreditPurchase');
     Route::post('deletePurchaseExpense','Web\AdminController@deletePurchaseExpense')->name('deletePurchaseExpense');
+    Route::get('/export-expenses','Web\AdminController@exportExpenses')->name('export-expenses');
 
     //Promotion List
     Route::get('PromotionList', 'Web\AdminController@getPromotionList')->name('promotion_create');

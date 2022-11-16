@@ -6,17 +6,21 @@
 
 @section('place')
 
-<div class="col-md-5 col-8 align-self-center">
+<div class="col-md-11 col-8 align-self-center">
     <h3 class="text-themecolor m-b-0 m-t-0">Purchase Expenses List</h3>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('index')}}">Dashboard</a></li>
         <li class="breadcrumb-item active">Purchase Expenses List</li>
     </ol>
 </div>
+<div class="col-md-1 col-12 align-self-center">
+    <a href="{{route('export-expenses')}}" class="btn btn-info btn-m btn-block" onclick="getexport()">Export</a>
+</div>
 
 @endsection
 
 @section('content')
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card shadow">
@@ -412,6 +416,8 @@
             })
 
     })
+
+
 
 
 </script>

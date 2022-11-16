@@ -12,15 +12,17 @@ use App\Option;
 use App\Expense;
 use App\Voucher;
 use App\MenuItem;
+use App\Purchase;
+use App\Promotion;
 use App\ShopOrder;
 use App\TableType;
 use Carbon\Carbon;
 use App\CuisineType;
 use Illuminate\Http\Request;
+use App\Exports\ExportExpense;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Promotion;
-use App\Purchase;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -387,6 +389,11 @@ class AdminController extends Controller
 
 		return response()->json($expense_lists);
 	}
+
+    public function exportExpenses(Request $request){
+        return Excel::download(new ExportExpense, 'Expenses.xlsx');
+    }
+
     protected function newOreditPurchase(Request $request)
 	{
 
